@@ -1,5 +1,4 @@
 groq
-os
 streamlit
 typing-inspect
 typing_extensions
