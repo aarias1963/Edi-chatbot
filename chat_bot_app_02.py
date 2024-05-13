@@ -8,7 +8,7 @@ st.set_page_config(page_icon="💬", layout="wide",
 
 st.image('Logo_Edinumen_S.png', caption=None, width=80, clamp=False, channels="RGB", output_format="auto")
 
-st.subheader("Groq Chat Streamlit App", divider="rainbow", anchor=False)
+st.subheader("EdiChat - Groq", divider="rainbow", anchor=False)
 
 client = Groq(
     api_key=st.secrets["GROQ_API_KEY"],
@@ -35,7 +35,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     model_option = st.sidebar.selectbox(
-        "Choose a model:",
+        "Elige un modelo:",
         options=list(models.keys()),
         format_func=lambda x: models[x]["name"],
         index=3  # Default to mixtral
@@ -51,7 +51,7 @@ max_tokens_range = models[model_option]["tokens"]
 with col2:
     # Adjust max_tokens slider dynamically based on the selected model
     max_tokens = st.sidebar.slider(
-        "Max Tokens:",
+        "Tokens máximos:",
         min_value=512,  # Minimum value to allow some flexibility
         max_value=max_tokens_range,
         # Default value or max allowed if less
@@ -74,7 +74,7 @@ def generate_chat_responses(chat_completion) -> Generator[str, None, None]:
             yield chunk.choices[0].delta.content
 
 
-if prompt := st.chat_input("Enter your prompt here..."):
+if prompt := st.chat_input("Introduce tu prompt aquí..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     with st.chat_message("user", avatar='👨‍💻'):
