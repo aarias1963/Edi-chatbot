@@ -1,19 +1,25 @@
 import streamlit as st
-import os
 from typing import Generator
 from groq import Groq
 
 st.set_page_config(page_icon="💬", layout="wide",
-                   page_title="Edinumen Chat Bot")
+                   page_title="Groq Goes Brrrrrrrr...")
 
 
-st.image('Logo_Edinumen_S.png', caption=None, width=80, clamp=False, channels="RGB", output_format="auto")
+def icon(emoji: str):
+    """Shows an emoji as a Notion-style page icon."""
+    st.write(
+        f'<span style="font-size: 78px; line-height: 1">{emoji}</span>',
+        unsafe_allow_html=True,
+    )
 
+
+icon("🏎️")
 
 st.subheader("Groq Chat Streamlit App", divider="rainbow", anchor=False)
 
 client = Groq(
-    api_key = os.environ['GROQ_API_KEY'],
+    api_key=st.secrets["GROQ_API_KEY"],
 )
 
 # Initialize chat history and selected model
@@ -25,22 +31,22 @@ if "selected_model" not in st.session_state:
 
 # Define model details
 models = {
-    "llama3-70b-8192": {"name": "LLaMA3-70b-8192", "tokens": 8192, "developer": "Meta"},
+    "gemma-7b-it": {"name": "Gemma-7b-it", "tokens": 8192, "developer": "Google"},
     "llama2-70b-4096": {"name": "LLaMA2-70b-chat", "tokens": 4096, "developer": "Meta"},
+    "llama3-70b-8192": {"name": "LLaMA3-70b-8192", "tokens": 8192, "developer": "Meta"},
     "llama3-8b-8192": {"name": "LLaMA3-8b-8192", "tokens": 8192, "developer": "Meta"},
     "mixtral-8x7b-32768": {"name": "Mixtral-8x7b-Instruct-v0.1", "tokens": 32768, "developer": "Mistral"},
-    "gemma-7b-it": {"name": "Gemma-7b-it", "tokens": 8192, "developer": "Google"}
 }
 
 # Layout for model selection and max_tokens slider
 col1, col2 = st.columns(2)
 
 with col1:
-    model_option = st.sidebar.selectbox(
+    model_option = st.selectbox(
         "Choose a model:",
         options=list(models.keys()),
         format_func=lambda x: models[x]["name"],
-        index=1  # Default to mixtral
+        index=4  # Default to mixtral
     )
 
 # Detect model change and clear chat history if model has changed
@@ -52,7 +58,7 @@ max_tokens_range = models[model_option]["tokens"]
 
 with col2:
     # Adjust max_tokens slider dynamically based on the selected model
-    max_tokens = st.sidebar.slider(
+    max_tokens = st.slider(
         "Max Tokens:",
         min_value=512,  # Minimum value to allow some flexibility
         max_value=max_tokens_range,
