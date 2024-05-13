@@ -12,7 +12,9 @@ st.image('Logo_Edinumen_S.png', caption=None, width=80, clamp=False, channels="R
 
 st.subheader("Groq Chat Streamlit App", divider="rainbow", anchor=False)
 
-groq_api_key = os.environ['GROQ_API_KEY']
+client = Groq(
+    groq_api_key = os.environ['GROQ_API_KEY'],
+)
 
 # Initialize chat history and selected model
 if "messages" not in st.session_state:
