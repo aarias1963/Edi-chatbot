@@ -3,18 +3,10 @@ from typing import Generator
 from groq import Groq
 
 st.set_page_config(page_icon="💬", layout="wide",
-                   page_title="Groq Goes Brrrrrrrr...")
+                   page_title="Edinumen Chat Bot")
 
 
-def icon(emoji: str):
-    """Shows an emoji as a Notion-style page icon."""
-    st.write(
-        f'<span style="font-size: 78px; line-height: 1">{emoji}</span>',
-        unsafe_allow_html=True,
-    )
-
-
-icon("🏎️")
+st.image('Logo_Edinumen_S.png', caption=None, width=80, clamp=False, channels="RGB", output_format="auto")
 
 st.subheader("Groq Chat Streamlit App", divider="rainbow", anchor=False)
 
@@ -42,11 +34,11 @@ models = {
 col1, col2 = st.columns(2)
 
 with col1:
-    model_option = st.selectbox(
+    model_option = st.sidebar.selectbox(
         "Choose a model:",
         options=list(models.keys()),
         format_func=lambda x: models[x]["name"],
-        index=4  # Default to mixtral
+        index=3  # Default to mixtral
     )
 
 # Detect model change and clear chat history if model has changed
@@ -58,7 +50,7 @@ max_tokens_range = models[model_option]["tokens"]
 
 with col2:
     # Adjust max_tokens slider dynamically based on the selected model
-    max_tokens = st.slider(
+    max_tokens = st.sidebar.slider(
         "Max Tokens:",
         min_value=512,  # Minimum value to allow some flexibility
         max_value=max_tokens_range,
