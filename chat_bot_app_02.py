@@ -59,7 +59,7 @@ with col2:
         step=512,
         help=f"Adjust the maximum number of tokens (words) for the model's response. Max for selected model: {max_tokens_range}"
     )
-    st.button("Reiniciar chat", on_click=st.session_state.clear, args=())
+    st.sidebar.button("Reiniciar chat", on_click=st.session_state.clear, args=())
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
