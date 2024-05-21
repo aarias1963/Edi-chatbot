@@ -63,7 +63,7 @@ with col2:
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
     avatar = '🤖' if message["role"] == "assistant" else '👨‍💻'
-    with st.chat_message(message["role"], avatar=avatar):
+    with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
 
